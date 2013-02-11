@@ -52,9 +52,7 @@ class ShutdownListener
             return;
         }
 
-        $message   = '[Shutdown Error]: %s';
-        $message   = sprintf($message, $error['message']);
-        $exception = new RuntimeException($message.' in: '.$error['file'].':'.$error['line']);
+        $exception = new RuntimeException($error['message'].' in: '.$error['file'].':'.$error['line']);
         $culprit = $error['file'];
         if ($this->client->getEnvironment() != 'prod') {
             return array($exception, $culprit, $this->client->getEnvironment());
