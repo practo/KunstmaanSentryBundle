@@ -4,6 +4,7 @@ namespace Kunstmaan\SentryBundle\EventListener;
 use Kunstmaan\SentryBundle\Raven\Raven;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 
 /**
@@ -33,6 +34,9 @@ class ExceptionListener
     {
         $exception = $event->getException();
         if ($exception instanceof HttpException) {
+            return;
+        }
+        if ($exception instanceof InsufficientAuthenticationException) {
             return;
         }
         $culprit = null;
